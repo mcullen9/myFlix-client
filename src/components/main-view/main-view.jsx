@@ -5,7 +5,7 @@ import { MovieView } from "../movie-view/movie-view";
 export const MainView = () => {
   const [movies, setMovies] = useState([
     {
-      _id: ObjectId("65b354f0ed3a05235544d765"),
+      _id: "65b354f0ed3a05235544d765",
       Title: "Inception",
       Description:
         "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
@@ -24,7 +24,7 @@ export const MainView = () => {
       Feature: true,
     },
     {
-      _id: ObjectId("65b355f3ed3a05235544d766"),
+      _id: "65b355f3ed3a05235544d766",
       Title: "The Dark Knight",
       Description:
         "A gripping superhero film that follows Batman's quest to confront the anarchic Joker, exploring themes of chaos, morality, and the blurred line between heroism and vigilantism.",
@@ -43,7 +43,7 @@ export const MainView = () => {
       Feature: true,
     },
     {
-      _id: ObjectId("65b358feed3a05235544d767"),
+      _id: "65b358feed3a05235544d767",
       Title: "Avatar",
       Description:
         "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
