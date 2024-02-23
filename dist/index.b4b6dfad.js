@@ -27181,73 +27181,21 @@ var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            _id: "65b354f0ed3a05235544d765",
-            Title: "Inception",
-            Description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-            Genre: {
-                Name: "Sci-Fi",
-                Description: "Science fiction films incorporate futuristic elements such as advanced technology, space travel, and time travel."
-            },
-            Director: {
-                Name: "Christopher Nolan",
-                Bio: "Christopher Nolan is a renowned British-American filmmaker known for his visionary and groundbreaking work in the realm of cinema, particularly acclaimed for directing mind-bending narratives and visually striking films.",
-                BirthYear: "1970",
-                DeathYear: null
-            },
-            ImagePath: "https://example.com/inception.jpg",
-            Feature: true
-        },
-        {
-            _id: "65b355f3ed3a05235544d766",
-            Title: "The Dark Knight",
-            Description: "A gripping superhero film that follows Batman's quest to confront the anarchic Joker, exploring themes of chaos, morality, and the blurred line between heroism and vigilantism.",
-            Genre: {
-                Name: "Action",
-                Description: "Action films emphasize physical activity and exhilaration."
-            },
-            Director: {
-                Name: "Christopher Nolan",
-                Bio: "Christopher Nolan is a renowned British-American filmmaker known for his visionary and groundbreaking work in the realm of cinema, particularly acclaimed for directing mind-bending narratives and visually striking films.",
-                BirthYear: "1970",
-                DeathYear: null
-            },
-            ImagePath: "https://example.com/dark_knight.jpg",
-            Feature: true
-        },
-        {
-            _id: "65b358feed3a05235544d767",
-            Title: "Avatar",
-            Description: "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
-            Genre: {
-                Name: "Sci-Fi",
-                Description: "Science fiction films incorporate futuristic elements such as advanced technology, space travel, and time travel."
-            },
-            Director: {
-                Name: "James Cameron",
-                Bio: "Legendary director",
-                BirthYear: "1954",
-                DeathYear: null
-            },
-            ImagePath: "https://example.com/avatar.jpg",
-            Feature: false
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 70,
+        lineNumber: 12,
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 78,
+        lineNumber: 20,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27258,16 +27206,16 @@ const MainView = ()=>{
                 }
             }, movie._id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 84,
+                lineNumber: 26,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 82,
+        lineNumber: 24,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "9sUzgLaNGpKHGclYFUJqQ5E+hWw=");
+_s(MainView, "jzuc4/Y81KLA8pUTcmWNL/aPH2I=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
