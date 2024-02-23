@@ -27,7 +27,7 @@ export const MainView = () => {
 
         setMovies(moviesFromApi);
       });
-  });
+  }, []);
 
   if (selectedMovie) {
     return (

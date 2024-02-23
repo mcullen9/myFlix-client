@@ -27200,7 +27200,7 @@ const MainView = ()=>{
             });
             setMovies(moviesFromApi);
         });
-    });
+    }, []);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
