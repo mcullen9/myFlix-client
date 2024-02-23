@@ -27198,6 +27198,7 @@ const MainView = ()=>{
                     }
                 };
             });
+            // use setMovies to populate movies state
             setMovies(moviesFromApi);
         });
     }, []);
