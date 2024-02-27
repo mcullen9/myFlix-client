@@ -1,3 +1,5 @@
+//import PropTypes from "prop-types";
+
 export const MovieView = ({ movie, onBackClick }) => {
   return (
     <div>
@@ -25,6 +27,5 @@ export const MovieView = ({ movie, onBackClick }) => {
   );
 };
 
-/* Write the MovieView component to display more info about the movie- should render the movie's title, description, poster image, genre, director, etc. depending on what data you have store in your database.
-Add a button to MovieView to navigate back to MainView's original state
-*/
+// Add propTypes?
+// MovieView.propTypes = {};
