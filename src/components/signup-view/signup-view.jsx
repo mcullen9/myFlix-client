@@ -18,10 +18,10 @@ export const SignupView = () => {
 
     fetch("https://myfaveflix.onrender.com/users", {
       method: "POST",
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
