@@ -29,10 +29,10 @@ export const MainView = () => {
             Title: movie.Title,
             Description: movie.Description,
             Genre: {
-              Name: movie.Genre.Name,
+              Name: movie.Genre?.Name,
             },
             Director: {
-              Name: movie.Director.Name,
+              Name: movie.Director?.Name,
             },
           };
         });
