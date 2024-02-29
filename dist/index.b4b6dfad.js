@@ -27214,8 +27214,8 @@ const MainView = ()=>{
                     _id: movie._id,
                     Title: movie.Title,
                     Description: movie.Description,
-                    Genre: movie.Genre.Name,
-                    Director: movie.Director.Name
+                    Genre: movie.Genre,
+                    Director: movie.Director
                 };
             });
             setMovies(moviesFromApi);
