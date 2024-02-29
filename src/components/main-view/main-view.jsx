@@ -30,15 +30,11 @@ export const MainView = () => {
             _id: movie._id,
             Title: movie.Title,
             Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-            },
-            Director: {
-              Name: movie.Director.Name,
-            },
+            Genre: movie.Genre.Name,
+            Director: movie.Director.Name,
           };
         });
-        // use setMovies to populate movies state
+
         setMovies(moviesFromApi);
       });
   }, [token]);
