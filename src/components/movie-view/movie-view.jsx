@@ -2,8 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./movie-view.scss";
 import Button from "react-bootstrap/Button";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+  const movie = movies.find((m) => m._id === movieId);
+
   return (
     <div>
       <div>
@@ -25,13 +30,9 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Genre: </span>
         <span>{movie.Genre.Name}</span>
       </div>
-      <Button
-        onClick={onBackClick}
-        className="back-button"
-        style={{ cursor: "pointer" }}
-      >
-        Back
-      </Button>
+      <Link to={`/`}>
+        <Button className="back-button">Back</Button>
+      </Link>
     </div>
   );
 };
@@ -44,5 +45,4 @@ MovieView.propTypes = {
     Director: PropTypes.string.isRequired,
     Genre: PropTypes.string.isRequired,
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
 };
