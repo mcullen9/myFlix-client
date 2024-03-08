@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
-//import { Routes, Route } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
@@ -19,7 +18,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to="/login">
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link as={Link} to="/users">
                   Signup
                 </Nav.Link>
               </>
@@ -29,6 +28,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
+                <Nav.Link as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
@@ -37,4 +39,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
       </Container>
     </Navbar>
   );
+};
+
+NavigationBar.propTypes = {
+  user: PropTypes.object.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
 };
