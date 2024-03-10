@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Navigate } from "react-router";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ export const SignupView = () => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday,
+      Birthday: date,
     };
 
     fetch("https://myfaveflix.onrender.com/users", {
@@ -27,7 +28,6 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
-        window.location.reload();
       } else {
         alert("Signup failed");
       }
@@ -46,7 +46,7 @@ export const SignupView = () => {
           minLength="3"
         />
       </Form.Group>
-
+      <br />
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control
@@ -56,7 +56,7 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-
+      <br />
       <Form.Group controlId="formBirthday">
         <Form.Label>Birthday:</Form.Label>
         <Form.Control
@@ -66,7 +66,7 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-
+      <br />
       <Form.Group controlId="formEmail">
         <Form.Label>Email:</Form.Label>
         <Form.Control
@@ -76,9 +76,9 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-
+      <br />
       <Button className="signup-button" variant="primary" type="submit">
-        Submit
+        Sign Up
       </Button>
     </Form>
   );
