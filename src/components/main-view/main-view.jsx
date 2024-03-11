@@ -60,7 +60,7 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="/signup"
+            path="/users"
             element={
               <>
                 {user ? (
@@ -98,7 +98,7 @@ export const MainView = () => {
             element={
               <Row className="justify-content-center">
                 <Col sm={12} md={9} lg={7}>
-                  {!user ? (
+                  {user ? (
                     <ProfileView
                       token={token}
                       user={user}
@@ -106,7 +106,7 @@ export const MainView = () => {
                       onSubmit={(user) => setUser(user)}
                     />
                   ) : (
-                    <Navigate to="/login" replace />
+                    <Navigate to="/login" />
                   )}
                 </Col>
               </Row>
