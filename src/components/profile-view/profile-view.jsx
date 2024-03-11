@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { Form, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Card } from "react-bootstrap";
+//import { Link } from "react-router-dom";
 import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
@@ -10,7 +10,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const [username, setUsername] = useState(user.Username);
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday);
 
@@ -18,15 +18,18 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
     user.FavoriteMovies.includes(m.Title)
   );
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault(event);
 
     const formData = {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: date,
     };
+
+    formData.Birthday = birthday
+      ? new Date(birthday).toISOString().substring(0, 10)
+      : null;
 
     // Updated info goes to `/users/:Username` endpoint
     fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
@@ -53,7 +56,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
       .catch((error) => {
         console.error(error);
       });
-  };
+  }
 
   const handleUpdate = (e) => {
     switch (e.target.type) {
@@ -69,8 +72,8 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
     }
   };
 
-  const handleDeleteAccount = (_id) => {
-    fetch(`https://myfaveflix.onrender.com/users/${_id}`, {
+  const handleDeleteUser = () => {
+    fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +81,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
       },
     }).then((response) => {
       if (response.ok) {
-        alert("The account has been successfully deleted.");
+        alert("User has been successfully deleted.");
         localStorage.clear();
         window.location.reload();
       } else {
@@ -88,7 +91,55 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   };
 
   return (
-    <div>
+    <>
+      <Row>
+        <Card>
+          <Row>
+            <Col />
+            <Col>
+              <img
+                src={Profile_img}
+                width="80"
+                height="80"
+                className="profile-img"
+              />
+            </Col>
+            <Col />
+          </Row>
+          <Card.Body>
+            <Card.Title>
+              <h2> Hello {username}! </h2>
+            </Card.Title>
+            <Card.Text>{email}</Card.Text>
+            <br />
+            <Button
+              onClick={() => handleDeleteUser(storedUser._id)}
+              className="button-delete"
+              type="submit"
+              variant="outline-secondary"
+            >
+              Delete User
+            </Button>
+          </Card.Body>
+        </Card>
+        <Col>
+          <UpdateUser
+            formData={formData}
+            handleUpdate={handleUpdate}
+            handleSubmit={handleSubmit}
+          />
+        </Col>
+        <br />
+      </Row>
+      <hr />
+      <Row className="justify-content-center">
+        <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
+      </Row>
+    </>
+  );
+};
+
+/* <div>
       <p>User: {user.Username}</p>
       <p>Email: {user.Email}</p>
       <div>
@@ -108,5 +159,4 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
         })}
       </div>
     </div>
-  );
-};
+*/
