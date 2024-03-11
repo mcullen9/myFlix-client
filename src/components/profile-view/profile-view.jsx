@@ -18,19 +18,18 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
     user.FavoriteMovies.includes(m.Title)
   );
 
+  const formData = {
+    Username: username,
+    Password: password,
+    Email: email,
+  };
+
+  formData.Birthday = birthday
+    ? new Date(birthday).toISOString().substring(0, 10)
+    : null;
+
   function handleSubmit(event) {
     event.preventDefault(event);
-
-    const formData = {
-      Username: username,
-      Password: password,
-      Email: email,
-    };
-
-    formData.Birthday = birthday
-      ? new Date(birthday).toISOString().substring(0, 10)
-      : null;
-
     // Updated info goes to `/users/:Username` endpoint
     fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
       //find out syntax for the storedUser endpoint in the URL
