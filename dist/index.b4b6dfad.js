@@ -41655,7 +41655,7 @@ const SignupView = ()=>{
             Email: email,
             Birthday: isoDate
         };
-        fetch("https://myfaveflix.onrender.com/users", {
+        fetch("https://myfaveflix.onrender.com/signup", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
