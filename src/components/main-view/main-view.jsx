@@ -92,19 +92,22 @@ export const MainView = () => {
           />
 
           <Route
-            path="/users"
+            path="/profile"
             element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
-                ) : (
-                  <Col>
-                    <ProfileView />
-                  </Col>
-                )}
-              </>
+              <Row className="justify-content-center">
+                <Col sm={12} md={9} lg={7}>
+                  {!user ? (
+                    <ProfileView
+                      token={token}
+                      user={user}
+                      movies={movies}
+                      onSubmit={(user) => setUser(user)}
+                    />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )}
+                </Col>
+              </Row>
             }
           />
           <Route
@@ -135,7 +138,10 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie._id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard
+                          isFavorite={user.FavoriteMovies.includes(movie.Title)}
+                          movie={movie}
+                        />
                       </Col>
                     ))}
                   </>
