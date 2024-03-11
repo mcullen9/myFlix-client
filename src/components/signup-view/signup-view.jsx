@@ -16,7 +16,7 @@ export const SignupView = () => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: date,
+      Birthday: birthday,
     };
 
     fetch("https://myfaveflix.onrender.com/users", {
