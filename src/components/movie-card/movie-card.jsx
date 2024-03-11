@@ -1,33 +1,133 @@
 import "./movie-card.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, onMovieClick }) => {
+export const MovieCard = ({ movie, isFavorite }) => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const [newFav, setNewFav] = useState("");
+  const [deleteFav, setDeleteFav] = useState("");
+
+  // Add movie to FavoriteMovies list
+  useEffect(() => {
+    const addToFavorites = () => {
+      fetch(
+        `https://myfaveflix.onrender.com/users/${
+          user.Username
+        }/movies/${encodeURIComponent(movie.Title)}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to add movie to Favorites.");
+          }
+          alert("Movie successfully added to Favorites!");
+          window.location.reload();
+          return response.json();
+        })
+        .then((user) => {
+          if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+            setUser(user);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const removeFromFavorites = () => {
+      fetch(
+        `https://myfaveflix.onrender.com/users/${
+          user.Username
+        }/movies/${encodeURIComponent(movie.Title)}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to remove movie from Favorites.");
+          }
+          alert("Movie successfully removed from Favorites.");
+          window.location.reload();
+          return response.json();
+        })
+        .then((user) => {
+          if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+            setUser(user);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    if (newFav) {
+      addToFavorites();
+    }
+    if (deleteFav) {
+      removeFromFavorites();
+    }
+  }, [newFav, deleteFav, token]);
+
+  const handleAddToFavorites = () => {
+    setNewFav(movie.Title);
+  };
+
+  const handleRemoveFromFavorites = () => {
+    setDeleteFav(movie.Title);
+  };
+
   return (
-    <Card className="h-100" onClick={() => onMovieClick(movie)}>
-      <Card.Img variant="top" src={movie.ImagePath} />
-      <Card.Body>
-        <Card.Title>{movie.Title}</Card.Title>
-        <Card.Text>{movie.Description}</Card.Text>
-        <Button
-          onClick={() => onMovieClick(movie)}
-          className="info-button"
-          variant="link"
-        >
-          More Info
-        </Button>
-      </Card.Body>
-    </Card>
+    <>
+      <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+        <Card>
+          <Card.Img variant="top" src={movie.ImagePath} />
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Text>{movie.Description}</Card.Text>
+          </Card.Body>
+        </Card>
+      </Link>
+      <Card>
+        {isFavorite ? (
+          <Button variant="primary" onClick={handleRemoveFromFavorites}>
+            Remove from Favorites
+          </Button>
+        ) : (
+          <Button variant="primary" onClick={handleAddToFavorites}>
+            Add to Favorites
+          </Button>
+        )}
+      </Card>
+    </>
   );
 };
 
 MovieCard.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
   movie: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
 };
