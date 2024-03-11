@@ -9,7 +9,13 @@ import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 //import Button from "react-bootstrap/Button";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -18,6 +24,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
   // const [selectedMovie, setSelectedMovie] = useState(null); //delete after refactoring code
 
   useEffect(() => {
@@ -60,7 +67,7 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="/users"
+            path="/signup"
             element={
               <>
                 {user ? (
@@ -100,7 +107,6 @@ export const MainView = () => {
                 <Col sm={12} md={9} lg={7}>
                   {user ? (
                     <ProfileView
-                      token={token}
                       user={user}
                       movies={movies}
                       onSubmit={(user) => setUser(user)}
@@ -113,7 +119,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:movieId"
+            path="/movies/:Title"
             element={
               <>
                 {!user ? (
