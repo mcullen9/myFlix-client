@@ -123,6 +123,7 @@ export const MovieCard = ({ movie, isFavorite }) => {
 };
 
 MovieCard.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
   movie: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
