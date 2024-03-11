@@ -39,7 +39,7 @@ export const MainView = () => {
             Director: movie.Director,
           };
         });
-
+        localStorage.setItem("movies", JSON.stringify(moviesFromApi));
         setMovies(moviesFromApi);
       });
   }, [token]);
@@ -48,6 +48,7 @@ export const MainView = () => {
     <BrowserRouter>
       <NavigationBar
         user={user}
+        movies={movies}
         onLoggedOut={() => {
           setUser(null);
           setToken(null);
@@ -127,7 +128,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/profile"
+            path="/"
             element={
               <>
                 {!user ? (
