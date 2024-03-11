@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Navigate } from "react-router";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -11,12 +10,13 @@ export const SignupView = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault(event);
+    const isoDate = new Date(birthday);
 
     const data = {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday,
+      Birthday: isoDate,
     };
 
     fetch("https://myfaveflix.onrender.com/users", {
