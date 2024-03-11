@@ -42278,7 +42278,7 @@ const FavoriteMovies = ({ user, favoriteMovies })=>{
 };
 _c = FavoriteMovies;
 FavoriteMovies.propTypes = {
-    favoriteMovies: propTypes.array.isRequired,
+    favoriteMovies: (0, _propTypesDefault.default).array.isRequired,
     user: (0, _propTypesDefault.default).object.isRequired
 };
 var _c;
