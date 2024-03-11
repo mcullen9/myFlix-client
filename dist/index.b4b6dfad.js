@@ -27251,7 +27251,7 @@ const MainView = ()=>{
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Routes), {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/users",
+                            path: "/signup",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                     to: "/"
@@ -41655,7 +41655,7 @@ const SignupView = ()=>{
             Email: email,
             Birthday: isoDate
         };
-        fetch("https://myfaveflix.onrender.com/signup", {
+        fetch("https://myfaveflix.onrender.com/users", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
