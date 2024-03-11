@@ -37,6 +37,7 @@ export const MainView = () => {
             Description: movie.Description,
             Genre: movie.Genre,
             Director: movie.Director,
+            ImagePath: movie.ImagePath,
           };
         });
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
