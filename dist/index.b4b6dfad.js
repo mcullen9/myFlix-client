@@ -27505,7 +27505,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
             });
         };
         const removeFromFavorites = ()=>{
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

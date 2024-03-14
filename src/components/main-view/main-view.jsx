@@ -27,6 +27,11 @@ export const MainView = () => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   // const [selectedMovie, setSelectedMovie] = useState(null); //delete after refactoring code
 
+  const updateUser = (data) => {
+    setUser(data);
+    localStorage.setItem("user", JSON.stringify(data));
+  };
+
   useEffect(() => {
     if (!token) {
       return;
@@ -148,8 +153,11 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie.Title)}
+                          isFavorite={user.FavoriteMovies.includes(movie._id)}
                           movie={movie}
+                          updateUser={updateUser}
+                          user={user}
+                          token={token}
                         />
                       </Col>
                     ))}
