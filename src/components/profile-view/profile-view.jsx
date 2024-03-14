@@ -13,6 +13,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday);
+  const [profileImg, setProfileImg] = useState("");
 
   const favoriteMovies = movies.filter((m) =>
     user.FavoriteMovies.includes(m.Title)
@@ -97,7 +98,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
             <Col />
             <Col>
               <img
-                src={Profile_img}
+                src={profileImg}
                 width="80"
                 height="80"
                 className="profile-img"
