@@ -14,7 +14,7 @@ import {
   Routes,
   Route,
   Navigate,
-  useParams,
+  useParams, //do I need this in main-view?
 } from "react-router-dom";
 
 export const MainView = () => {
@@ -24,8 +24,8 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-  // const [selectedMovie, setSelectedMovie] = useState(null); //delete after refactoring code
+  const [favoriteMovies, setFavoriteMovies] = useState([]); // do I need to add this back?
+  // const [selectedMovie, setSelectedMovie] = useState(null); //delete ?
 
   const updateUser = (data) => {
     setUser(data);
@@ -76,7 +76,7 @@ export const MainView = () => {
             element={
               <>
                 {user ? (
-                  <Navigate to="/" />
+                  <Navigate to="/" /> //should this say /users like the api endpoint?
                 ) : (
                   <Col md={4}>
                     <SignupView />
@@ -113,8 +113,11 @@ export const MainView = () => {
                   {user ? (
                     <ProfileView
                       user={user}
+                      token={token}
                       movies={movies}
                       onSubmit={(user) => setUser(user)}
+                      //setFavoriteMovies(user.FavoriteMovies)
+                      //newFav and deleteFav or addToFavorites and removeFromFavorites?
                     />
                   ) : (
                     <Navigate to="/login" />
@@ -124,7 +127,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:Title"
+            path="/movies/:Title" //might need to change Title to something else-- movieID?
             element={
               <>
                 {!user ? (
@@ -133,7 +136,10 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView
+                      movies={movies}
+                      //newFav and deleteFav? or addToFavorite and removeFromFavorites?
+                    />
                   </Col>
                 )}
               </>
@@ -153,7 +159,7 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie._id)}
+                          isFavorite={user.FavoriteMovies.includes(movie.Title)} //Title or _id
                           movie={movie}
                           updateUser={updateUser}
                           user={user}

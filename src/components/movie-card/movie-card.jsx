@@ -14,12 +14,12 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie._id)}`,
+        }/movies/${encodeURIComponent(movie._id)}`, //or _id
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
           },
         }
       )
@@ -32,7 +32,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
         })
         .then((user) => {
           if (user) {
-            updateUser(user);
+            updateUser(user); //check where else this is used
           }
         })
         .catch((error) => {
@@ -41,14 +41,15 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
     };
 
     const removeFromFavorites = () => {
+      //empty () if it doesn't work or change to MovieID
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie._id)}`,
+        }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, //this also might need to be storedToken
             "Content-Type": "application/json",
           },
         }

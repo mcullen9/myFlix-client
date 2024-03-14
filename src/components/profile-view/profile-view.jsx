@@ -6,7 +6,7 @@ import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
 
-export const ProfileView = ({ token, user, movies, onSubmit }) => {
+export const ProfileView = ({ token, user, movies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const [username, setUsername] = useState(user.Username);
@@ -15,11 +15,12 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   const [birthday, setBirthday] = useState(user.Birthday);
   const [profileImg, setProfileImg] = useState("");
 
-  const favoriteMovies = movies.filter((m) =>
-    user.FavoriteMovies.includes(m.Title)
+  const favoriteMovies = movies.filter(
+    (m) => user.FavoriteMovies.includes(m.Title) //maybe change this Title to movieID or MovieID
   );
 
   const formData = {
+    //maybe get rid of form in formData everywhere and just make it data?
     Username: username,
     Password: password,
     Email: email,

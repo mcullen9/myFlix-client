@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Button, Row } from "react-bootstrap";
 
 export const UpdateUser = ({ formData, handleUpdate, handleSubmit }) => {
+  //remove all params
   return (
     <Row>
       <Form onSubmit={handleSubmit}>

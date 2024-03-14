@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault(event);
@@ -20,6 +22,7 @@ export const SignupView = () => {
     };
 
     fetch("https://myfaveflix.onrender.com/users", {
+      //does this endpoint need to say /signup
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -28,6 +31,7 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
+        navigate("/login");
       } else {
         alert("Signup failed");
       }
@@ -80,9 +84,19 @@ export const SignupView = () => {
         />
       </Form.Group>
       <br />
-      <Button className="signup-button" variant="primary" type="submit">
-        Sign Up
-      </Button>
+      <div>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={handleSubmit}
+          className="signup-button"
+        >
+          Sign Up
+        </Button>
+      </div>
+      <div>
+        <Link to="/login">or Log In</Link>
+      </div>
     </Form>
   );
 };
