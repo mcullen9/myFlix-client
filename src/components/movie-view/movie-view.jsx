@@ -6,9 +6,12 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
-  const { movieId } = useParams();
-  const movie = movies.find((m) => m._id === movieId);
+  const { Title } = useParams();
+  const movie = movies.find((m) => m.Title === Title);
 
+  if (!movie) {
+    return <div>Movie with title {Title} not found!</div>;
+  }
   return (
     <div>
       <div>
@@ -34,11 +37,17 @@ export const MovieView = ({ movies }) => {
 };
 
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    ImagePath: PropTypes.string.isRequired,
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Director: PropTypes.string.isRequired,
-    Genre: PropTypes.string.isRequired,
-  }).isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      ImagePath: PropTypes.string,
+      Title: PropTypes.string,
+      Description: PropTypes.string,
+      Director: PropTypes.shape({
+        Name: PropTypes.string,
+      }),
+      Genre: PropTypes.shape({
+        Name: PropTypes.string,
+      }),
+    })
+  ),
 };
