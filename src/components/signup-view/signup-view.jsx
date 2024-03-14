@@ -36,6 +36,9 @@ export const SignupView = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <br />
+      <h4>Create an account</h4>
+      <br />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control
