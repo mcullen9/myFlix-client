@@ -63,6 +63,9 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
       case "text":
         setUsername(e.target.value);
         break;
+      case "password":
+        setPassword(e.target.value);
+        break;
       case "email":
         setEmail(e.target.value);
         break;
