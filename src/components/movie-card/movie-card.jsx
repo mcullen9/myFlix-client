@@ -4,13 +4,7 @@ import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, isFavorite }) => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
-
+export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   const [newFav, setNewFav] = useState("");
   const [deleteFav, setDeleteFav] = useState("");
 
@@ -20,7 +14,7 @@ export const MovieCard = ({ movie, isFavorite }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie.Title)}`,
+        }/movies/${encodeURIComponent(movie._id)}`,
         {
           method: "POST",
           headers: {
@@ -34,13 +28,11 @@ export const MovieCard = ({ movie, isFavorite }) => {
             throw new Error("Failed to add movie to Favorites.");
           }
           alert("Movie successfully added to Favorites!");
-          window.location.reload();
           return response.json();
         })
         .then((user) => {
           if (user) {
-            localStorage.setItem("user", JSON.stringify(user));
-            setUser(user);
+            updateUser(user);
           }
         })
         .catch((error) => {
@@ -66,13 +58,11 @@ export const MovieCard = ({ movie, isFavorite }) => {
             throw new Error("Failed to remove movie from Favorites.");
           }
           alert("Movie successfully removed from Favorites.");
-          window.location.reload();
           return response.json();
         })
         .then((user) => {
           if (user) {
-            localStorage.setItem("user", JSON.stringify(user));
-            setUser(user);
+            updateUser(user);
           }
         })
         .catch((error) => {
@@ -98,7 +88,7 @@ export const MovieCard = ({ movie, isFavorite }) => {
 
   return (
     <>
-      <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+      <Link to={`/movies/${encodeURIComponent(movie.Title)}`}>
         <Card>
           <Card.Img variant="top" src={movie.ImagePath} />
           <Card.Body>
