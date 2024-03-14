@@ -27412,7 +27412,7 @@ const MainView = ()=>{
                                             className: "mb-4",
                                             md: 3,
                                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                                                isFavorite: user.FavoriteMovies.includes(movie._id),
+                                                isFavorite: user.FavoriteMovies.includes(movie.Title),
                                                 movie: movie,
                                                 updateUser: updateUser,
                                                 user: user,
@@ -27488,7 +27488,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
     // Add movie to FavoriteMovies list
     (0, _react.useEffect)(()=>{
         const addToFavorites = ()=>{
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
