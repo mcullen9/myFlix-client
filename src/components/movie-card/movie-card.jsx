@@ -44,7 +44,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie.Title)}`,
+        }/movies/${encodeURIComponent(movie._id)}`,
         {
           method: "DELETE",
           headers: {
