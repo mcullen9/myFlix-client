@@ -42003,7 +42003,7 @@ const NavigationBar = ({ user, onLoggedOut })=>{
 };
 _c = NavigationBar;
 NavigationBar.propTypes = {
-    user: (0, _propTypesDefault.default).object.isRequired,
+    user: (0, _propTypesDefault.default).object,
     onLoggedOut: (0, _propTypesDefault.default).func.isRequired
 };
 var _c;

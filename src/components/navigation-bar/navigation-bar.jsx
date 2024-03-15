@@ -42,6 +42,6 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 };
 
 NavigationBar.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   onLoggedOut: PropTypes.func.isRequired,
 };
