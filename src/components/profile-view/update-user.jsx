@@ -50,7 +50,7 @@ export const UpdateUser = ({ formData, handleUpdate, handleSubmit }) => {
           />
         </Form.Group>
         <br />
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit changes
         </Button>
       </Form>

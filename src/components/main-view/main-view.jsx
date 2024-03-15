@@ -24,7 +24,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]); // do I need to add this back?
+  const [favoriteMovies, setFavoriteMovies] = useState([]); // delete ?
   // const [selectedMovie, setSelectedMovie] = useState(null); //delete ?
 
   const updateUser = (data) => {
@@ -116,7 +116,7 @@ export const MainView = () => {
                       token={token}
                       movies={movies}
                       onSubmit={(user) => setUser(user)}
-                      //setFavoriteMovies(user.FavoriteMovies)
+                      // setFavoriteMovies(user.FavoriteMovies)
                       //newFav and deleteFav or addToFavorites and removeFromFavorites?
                     />
                   ) : (
@@ -127,7 +127,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:Title" //might need to change Title to something else-- movieID?
+            path="/movies/:MovieID" //might need to change Title to something else-- movieID?
             element={
               <>
                 {!user ? (

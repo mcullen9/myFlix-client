@@ -27205,7 +27205,7 @@ const MainView = ()=>{
     const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     const [movies, setMovies] = (0, _react.useState)([]);
-    const [favoriteMovies, setFavoriteMovies] = (0, _react.useState)([]); // do I need to add this back?
+    const [favoriteMovies, setFavoriteMovies] = (0, _react.useState)([]); // delete ?
     // const [selectedMovie, setSelectedMovie] = useState(null); //delete ?
     const updateUser = (data)=>{
         setUser(data);
@@ -27358,7 +27358,7 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/movies/:Title" //might need to change Title to something else-- movieID?
+                            path: "/movies/:MovieID" //might need to change Title to something else-- movieID?
                             ,
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
@@ -27491,7 +27491,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
     // Add movie to FavoriteMovies list
     (0, _react.useEffect)(()=>{
         const addToFavorites = ()=>{
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -27509,7 +27509,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
         };
         const removeFromFavorites = ()=>{
             //empty () if it doesn't work or change to MovieID
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -41336,15 +41336,11 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
     _s();
-    const { Title } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
-    const movie = movies.find((m)=>m.Title === Title);
+    const { MovieID } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
+    const movie = movies.find((m)=>m._id === MovieID);
     if (!movie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            "Movie with title ",
-            Title,
-            " not found!"
-        ]
-    }, void 0, true, {
+        children: "Movie not found!"
+    }, void 0, false, {
         fileName: "src/components/movie-view/movie-view.jsx",
         lineNumber: 13,
         columnNumber: 12
@@ -41448,7 +41444,7 @@ const MovieView = ({ movies })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "5iEKRQbtu+cNCllpp1bi3AstI8o=", false, function() {
+_s(MovieView, "9NuEabzFM24Cni8N79O6IWO1FYU=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -42090,7 +42086,7 @@ const ProfileView = ({ token, user, movies })=>{
         }
     };
     const handleDeleteUser = ()=>{
-        fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
+        fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -42176,7 +42172,7 @@ const ProfileView = ({ token, user, movies })=>{
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                                        onClick: ()=>handleDeleteUser(storedUser._id),
+                                        onClick: ()=>handleDeleteUser(storedUser.Username),
                                         className: "button-delete",
                                         type: "submit",
                                         variant: "outline-secondary",
@@ -42231,9 +42227,15 @@ const ProfileView = ({ token, user, movies })=>{
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
                 className: "justify-content-center",
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _favoriteMovies.FavoriteMovies), {
-                    user: user,
-                    favoriteMovies: favoriteMovies
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _favoriteMovies.FavoriteMovies), {
+                        user: user,
+                        favoriteMovies: favoriteMovies
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 141,
+                        columnNumber: 11
+                    }, undefined)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
                     lineNumber: 140,
@@ -42518,6 +42520,7 @@ const UpdateUser = ({ formData, handleUpdate, handleSubmit })=>{
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                     variant: "primary",
                     type: "submit",
+                    onClick: handleSubmit,
                     children: "Submit changes"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-user.jsx",

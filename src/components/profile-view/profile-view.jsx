@@ -77,11 +77,11 @@ export const ProfileView = ({ token, user, movies }) => {
   };
 
   const handleDeleteUser = () => {
-    fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
+    fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, //storedToken??
       },
     }).then((response) => {
       if (response.ok) {
@@ -117,7 +117,7 @@ export const ProfileView = ({ token, user, movies }) => {
             <Card.Text>{email}</Card.Text>
             <br />
             <Button
-              onClick={() => handleDeleteUser(storedUser._id)}
+              onClick={() => handleDeleteUser(storedUser.Username)} // or change back to storedUser._id
               className="button-delete"
               type="submit"
               variant="outline-secondary"
@@ -137,7 +137,9 @@ export const ProfileView = ({ token, user, movies }) => {
       </Row>
       <hr />
       <Row className="justify-content-center">
-        <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
+        <Col>
+          <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
+        </Col>
       </Row>
     </>
   );
