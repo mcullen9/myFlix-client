@@ -127,7 +127,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:MovieID" //might need to change Title to something else-- movieID?
+            path="/movies/:Title" //might need to change Title to something else-- movieID?
             element={
               <>
                 {!user ? (
@@ -159,7 +159,7 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie.Title)} //Title or _id
+                          isFavorite={user.FavoriteMovies.includes(movie._id)} //Title or _id
                           movie={movie}
                           updateUser={updateUser}
                           user={user}

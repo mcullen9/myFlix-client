@@ -16,7 +16,7 @@ export const ProfileView = ({ token, user, movies }) => {
   const [profileImg, setProfileImg] = useState("");
 
   const favoriteMovies = movies.filter(
-    (m) => user.FavoriteMovies.includes(m.Title) //maybe change this Title to movieID or MovieID
+    (m) => user.FavoriteMovies.includes(m._id) //maybe change this Title to movieID or MovieID
   );
 
   const formData = {
@@ -138,7 +138,11 @@ export const ProfileView = ({ token, user, movies }) => {
       <hr />
       <Row className="justify-content-center">
         <Col>
-          <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
+          <FavoriteMovies
+            user={user}
+            favoriteMovies={favoriteMovies}
+            movies={movies}
+          />
         </Col>
       </Row>
     </>

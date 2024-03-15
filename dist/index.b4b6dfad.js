@@ -27358,7 +27358,7 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/movies/:MovieID" //might need to change Title to something else-- movieID?
+                            path: "/movies/:Title" //might need to change Title to something else-- movieID?
                             ,
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
@@ -27415,7 +27415,7 @@ const MainView = ()=>{
                                             className: "mb-4",
                                             md: 3,
                                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                                                isFavorite: user.FavoriteMovies.includes(movie.Title),
+                                                isFavorite: user.FavoriteMovies.includes(movie._id),
                                                 movie: movie,
                                                 updateUser: updateUser,
                                                 user: user,
@@ -27491,7 +27491,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
     // Add movie to FavoriteMovies list
     (0, _react.useEffect)(()=>{
         const addToFavorites = ()=>{
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -27509,7 +27509,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
         };
         const removeFromFavorites = ()=>{
             //empty () if it doesn't work or change to MovieID
-            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie.Title)}`, {
+            fetch(`https://myfaveflix.onrender.com/users/${user.Username}/movies/${encodeURIComponent(movie._id)}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -41336,8 +41336,8 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
     _s();
-    const { MovieID } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
-    const movie = movies.find((m)=>m._id === MovieID);
+    const { _id } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
+    const movie = movies.find((m)=>m._id === _id);
     if (!movie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Movie not found!"
     }, void 0, false, {
@@ -41444,7 +41444,7 @@ const MovieView = ({ movies })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "9NuEabzFM24Cni8N79O6IWO1FYU=", false, function() {
+_s(MovieView, "vPsCSDVV6deW++FSv/OeRajD4dc=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -42037,7 +42037,7 @@ const ProfileView = ({ token, user, movies })=>{
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
     const [profileImg, setProfileImg] = (0, _react.useState)("");
-    const favoriteMovies = movies.filter((m)=>user.FavoriteMovies.includes(m.Title) //maybe change this Title to movieID or MovieID
+    const favoriteMovies = movies.filter((m)=>user.FavoriteMovies.includes(m._id) //maybe change this Title to movieID or MovieID
     );
     const formData = {
         //maybe get rid of form in formData everywhere and just make it data?
@@ -42230,7 +42230,8 @@ const ProfileView = ({ token, user, movies })=>{
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _favoriteMovies.FavoriteMovies), {
                         user: user,
-                        favoriteMovies: favoriteMovies
+                        favoriteMovies: favoriteMovies,
+                        movies: movies
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
                         lineNumber: 141,
@@ -42320,7 +42321,7 @@ const FavoriteMovies = ({ user, favoriteMovies })=>{
                                 columnNumber: 13
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                                isFavorite: user.FavoriteMovies.includes(movie.Title),
+                                isFavorite: user.FavoriteMovies.includes(movie._id),
                                 movie: movie
                             }, movie._id, false, {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",

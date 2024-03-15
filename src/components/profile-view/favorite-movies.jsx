@@ -17,7 +17,7 @@ export const FavoriteMovies = ({ user, favoriteMovies }) => {
             />
             <MovieCard
               key={movie._id}
-              isFavorite={user.FavoriteMovies.includes(movie.Title)} //Title or _id
+              isFavorite={user.FavoriteMovies.includes(movie._id)} //Title or _id
               movie={movie}
             />
           </Col>
