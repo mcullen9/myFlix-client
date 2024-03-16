@@ -6,8 +6,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
-  const { _id } = useParams(); //might need to change Title to something else maybe MovieID because of API endpoint
-  const movie = movies.find((m) => m._id === _id);
+  const { Title } = useParams(); //might need to change Title to something else maybe MovieID because of API endpoint
+  const movie = movies.find((m) => m.Title === Title);
 
   if (!movie) {
     return <div>Movie not found!</div>;

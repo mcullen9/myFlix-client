@@ -27533,10 +27533,10 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
         token
     ]);
     const handleAddToFavorites = ()=>{
-        setNewFav(movie.Title);
+        setNewFav(movie._id);
     };
     const handleRemoveFromFavorites = ()=>{
-        setDeleteFav(movie.Title);
+        setDeleteFav(movie._id);
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
@@ -41336,8 +41336,8 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
     _s();
-    const { _id } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
-    const movie = movies.find((m)=>m._id === _id);
+    const { Title } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
+    const movie = movies.find((m)=>m.Title === Title);
     if (!movie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Movie not found!"
     }, void 0, false, {
@@ -41444,7 +41444,7 @@ const MovieView = ({ movies })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "vPsCSDVV6deW++FSv/OeRajD4dc=", false, function() {
+_s(MovieView, "5iEKRQbtu+cNCllpp1bi3AstI8o=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];

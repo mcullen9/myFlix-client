@@ -80,11 +80,11 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   }, [newFav, deleteFav, token]);
 
   const handleAddToFavorites = () => {
-    setNewFav(movie.Title);
+    setNewFav(movie._id);
   };
 
   const handleRemoveFromFavorites = () => {
-    setDeleteFav(movie.Title);
+    setDeleteFav(movie._id);
   };
 
   return (
