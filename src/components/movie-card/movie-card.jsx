@@ -4,14 +4,7 @@ import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const MovieCard = ({
-  movie,
-  user,
-  token,
-  storedToken,
-  isFavorite,
-  updateUser,
-}) => {
+export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   const [newFav, setNewFav] = useState("");
   const [deleteFav, setDeleteFav] = useState("");
 
@@ -26,7 +19,7 @@ export const MovieCard = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${storedToken}`, //should it say storedToken- if yes, also call storedToken in params
+            Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
           },
         }
       )
@@ -56,7 +49,7 @@ export const MovieCard = ({
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${storedToken}`, //this also might need to be storedToken
+            Authorization: `Bearer ${token}`, //this also might need to be storedToken
             "Content-Type": "application/json",
           },
         }
