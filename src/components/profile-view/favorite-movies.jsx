@@ -11,10 +11,7 @@ export const FavoriteMovies = ({ user, favoriteMovies }) => {
       <Row>
         {favoriteMovies.map((movie) => (
           <Col key={movie._id} md={6}>
-            <Link
-              to={`/movies/${movie._id}`}
-              //maybe delete this?
-            />
+            <Link to={`/movies/${movie._id}`} />
             <MovieCard
               key={movie._id}
               isFavorite={user.FavoriteMovies.includes(movie._id)} //Title or _id

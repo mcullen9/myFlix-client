@@ -141,7 +141,7 @@ export const ProfileView = ({ token, user, movies }) => {
           <FavoriteMovies
             user={user}
             favoriteMovies={favoriteMovies}
-            movies={movies}
+            token={token}
           />
         </Col>
       </Row>

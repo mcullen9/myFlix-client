@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
+export const MovieCard = ({
+  movie,
+  user,
+  token,
+  storedToken,
+  isFavorite,
+  updateUser,
+}) => {
   const [newFav, setNewFav] = useState("");
   const [deleteFav, setDeleteFav] = useState("");
 
@@ -19,7 +26,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
+            Authorization: `Bearer ${storedToken}`, //should it say storedToken- if yes, also call storedToken in params
           },
         }
       )
@@ -49,7 +56,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`, //this also might need to be storedToken
+            Authorization: `Bearer ${storedToken}`, //this also might need to be storedToken
             "Content-Type": "application/json",
           },
         }
@@ -100,7 +107,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       </Link>
       <Card>
         {isFavorite ? (
-          <Button variant="primary" onClick={handleRemoveFromFavorites}>
+          <Button variant="danger" onClick={handleRemoveFromFavorites}>
             Remove from Favorites
           </Button>
         ) : (
