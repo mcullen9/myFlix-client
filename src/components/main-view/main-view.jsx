@@ -112,6 +112,7 @@ export const MainView = () => {
                     <ProfileView
                       user={user}
                       token={token}
+                      storedToken={storedToken}
                       movies={movies}
                       onSubmit={(user) => setUser(user)}
                     />
@@ -123,7 +124,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:MovieID" //might need to change Title to something else-- movieID?
+            path="/movies/:Title" // or MovieID?
             element={
               <>
                 {!user ? (
@@ -152,7 +153,7 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie.Title)} //changed from _id
+                          isFavorite={user.FavoriteMovies.includes(movie._id)} //changed from _id
                           movie={movie}
                           updateUser={updateUser}
                           user={user}

@@ -6,7 +6,7 @@ import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
 
-export const ProfileView = ({ token, user, movies }) => {
+export const ProfileView = ({ token, storedToken, user, movies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const [username, setUsername] = useState(user.Username);
@@ -16,7 +16,7 @@ export const ProfileView = ({ token, user, movies }) => {
   const [profileImg, setProfileImg] = useState("");
 
   const favoriteMovies = movies.filter(
-    (m) => user.FavoriteMovies.includes(m.Title) //changed from _id
+    (m) => user.FavoriteMovies.includes(m._id) //changed from _id
   );
 
   const formData = {
@@ -39,7 +39,7 @@ export const ProfileView = ({ token, user, movies }) => {
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storedToken}`,
       },
     })
       .then((response) => {
@@ -81,7 +81,7 @@ export const ProfileView = ({ token, user, movies }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, //storedToken??
+        Authorization: `Bearer ${storedToken}`, //storedToken??
       },
     }).then((response) => {
       if (response.ok) {

@@ -14,7 +14,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie.Title)}`, //or MovieID
+        }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie.Title)}`, //_id or Title
+        }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
         {
           method: "DELETE",
           headers: {
@@ -80,11 +80,11 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   }, [newFav, deleteFav, token]);
 
   const handleAddToFavorites = () => {
-    setNewFav(movie.Title); //changed from _id
+    setNewFav(movie._id); //changed from Title
   };
 
   const handleRemoveFromFavorites = () => {
-    setDeleteFav(movie.Title); //changed from _id
+    setDeleteFav(movie._id); //changed from Title
   };
 
   return (
