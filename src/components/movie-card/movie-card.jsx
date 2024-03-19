@@ -14,7 +14,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
+        }/movies/${encodeURIComponent(movie.Title)}`, //or MovieID
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       fetch(
         `https://myfaveflix.onrender.com/users/${
           user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
+        }/movies/${encodeURIComponent(movie.Title)}`, //_id or Title
         {
           method: "DELETE",
           headers: {
@@ -80,16 +80,16 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   }, [newFav, deleteFav, token]);
 
   const handleAddToFavorites = () => {
-    setNewFav(movie._id);
+    setNewFav(movie.Title); //changed from _id
   };
 
   const handleRemoveFromFavorites = () => {
-    setDeleteFav(movie._id);
+    setDeleteFav(movie.Title); //changed from _id
   };
 
   return (
     <>
-      <Link to={`/movies/${encodeURIComponent(movie.Title)}`}>
+      <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
         <Card>
           <Card.Img variant="top" src={movie.ImagePath} />
           <Card.Body>

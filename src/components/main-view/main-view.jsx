@@ -24,8 +24,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]); // delete ?
-  // const [selectedMovie, setSelectedMovie] = useState(null); //delete ?
 
   const updateUser = (data) => {
     setUser(data);
@@ -72,11 +70,11 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="/signup"
+            path="/signup" // or /users ?
             element={
               <>
                 {user ? (
-                  <Navigate to="/" /> //should this say /users like the api endpoint?
+                  <Navigate to="/" />
                 ) : (
                   <Col md={4}>
                     <SignupView />
@@ -116,8 +114,6 @@ export const MainView = () => {
                       token={token}
                       movies={movies}
                       onSubmit={(user) => setUser(user)}
-                      // setFavoriteMovies(user.FavoriteMovies)
-                      //newFav and deleteFav or addToFavorites and removeFromFavorites?
                     />
                   ) : (
                     <Navigate to="/login" />
@@ -127,7 +123,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:Title" //might need to change Title to something else-- movieID?
+            path="/movies/:MovieID" //might need to change Title to something else-- movieID?
             element={
               <>
                 {!user ? (
@@ -136,10 +132,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView
-                      movies={movies}
-                      //newFav and deleteFav? or addToFavorite and removeFromFavorites?
-                    />
+                    <MovieView movies={movies} />
                   </Col>
                 )}
               </>
@@ -159,7 +152,7 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie._id)} //Title or _id
+                          isFavorite={user.FavoriteMovies.includes(movie.Title)} //changed from _id
                           movie={movie}
                           updateUser={updateUser}
                           user={user}
