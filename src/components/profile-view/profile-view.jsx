@@ -8,6 +8,7 @@ import "./profile-view.scss";
 
 export const ProfileView = ({ user, token, movies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
@@ -133,12 +134,7 @@ export const ProfileView = ({ user, token, movies }) => {
       <hr />
       <Row className="justify-content-center">
         <Col>
-          <FavoriteMovies
-            movies={movies}
-            favoriteMovies={favoriteMovies}
-            onAddToFavorites={handleAddToFavorites}
-            onRemoveFromFavorites={handleRemoveFromFavorites}
-          />
+          <FavoriteMovies movies={movies} favoriteMovies={favoriteMovies} />
         </Col>
       </Row>
     </>

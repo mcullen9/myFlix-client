@@ -94,39 +94,38 @@ export const MainView = () => {
 
   // remove from favorites button
   const handleRemoveFromFavorites = (movieId) => {
-    const { FavoriteMovies } = updateUser;
-    const favoriteMovies = [...FavoriteMovies];
-    const newFavoriteMovies = favoriteMovies.filter((_id) => _id !== movieId);
+    // const { FavoriteMovies } = updateUser;
+    //const favoriteMovies = [...FavoriteMovies];
+    //const updateUser = favoriteMovies.filter((_id) => _id !== movieId);
 
-    if (favoriteMovies && favoriteMovies.some((_id) => _id === movieId)) {
-      setFavoriteMovies(newFavoriteMovies);
-      fetch(
-        `https://myfaveflix.onrender.com/users/${user.Username}/movies/${movieId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, //this also might need to be storedToken
-          },
+    // if (favoriteMovies && favoriteMovies.some((_id) => _id === movieId)) {
+    //   setFavoriteMovies(updateUser);
+    fetch(
+      `https://myfaveflix.onrender.com/users/${user.Username}/movies/${movieId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to remove movie from favorites.");
         }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to remove movie from favorites.");
-          }
-          alert("Movie successfully removed from favorites.");
-          return response.json();
-        })
-        .then((user) => {
-          if (user) {
-            updateUser(user);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("There was an error removing from favorites list.");
-        });
-    }
+        alert("Movie successfully removed from favorites.");
+        return response.json();
+      })
+      .then((user) => {
+        if (user) {
+          updateUser(user);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("There was an error removing from favorites list.");
+      });
   };
 
   return (
@@ -144,7 +143,7 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="/users" // or /signup ?
+            path="/signup" // or /signup ?
             element={
               <>
                 {user ? (
@@ -178,7 +177,7 @@ export const MainView = () => {
           />
 
           <Route
-            path="/users/:Username" // or /profile
+            path="/profile" // or /users/:Username
             element={
               <Row className="justify-content-center">
                 <Col sm={12} md={9} lg={7}>
