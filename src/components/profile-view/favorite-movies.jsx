@@ -4,7 +4,17 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const FavoriteMovies = ({ user, favoriteMovies }) => {
+export const FavoriteMovies = ({
+  user,
+  favoriteMovies,
+  onAddToFavorites,
+  onRemoveFromFavorites,
+  onFavoriteClick,
+}) => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const favoriteMovies =
+    storedUser && storedUser.FavoriteMovies ? storedUser.FavoriteMovies : [];
+
   return (
     <Col className="mb-5">
       <h3>Favorite Movies List</h3>
@@ -14,8 +24,11 @@ export const FavoriteMovies = ({ user, favoriteMovies }) => {
             <Link to={`/movies/${movie._id}`} />
             <MovieCard
               key={movie._id}
-              isFavorite={user.FavoriteMovies.includes(movie._id)} //changed from Title
               movie={movie}
+              fav={user.FavoriteMovies.includes(movie._id)}
+              onAddToFavorites={onAddToFavorites}
+              onRemoveFromFavorites={onRemoveFromFavorites}
+              onFavoriteClick={onFavoriteClick}
             />
           </Col>
         ))}
