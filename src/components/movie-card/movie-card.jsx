@@ -1,90 +1,38 @@
 import "./movie-card.scss";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
-  const [newFav, setNewFav] = useState("");
-  const [deleteFav, setDeleteFav] = useState("");
+export const MovieCard = ({
+  movie,
+  fav,
+  onAddToFavorites,
+  onRemoveFromFavorites,
+}) => {
+  const [isFavorite, setIsFavorite] = useState(fav);
 
-  // Add movie to FavoriteMovies list
-  useEffect(() => {
-    const addToFavorites = () => {
-      fetch(
-        `https://myfaveflix.onrender.com/users/${
-          user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
-          },
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to add movie to Favorites.");
-          }
-          alert("Movie successfully added to Favorites!");
-          return response.json();
-        })
-        .then((user) => {
-          if (user) {
-            updateUser(user); //check where else this is used
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    const removeFromFavorites = () => {
-      //empty () if it doesn't work or change to MovieID
-      fetch(
-        `https://myfaveflix.onrender.com/users/${
-          user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`, //this also might need to be storedToken
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to remove movie from Favorites.");
-          }
-          alert("Movie successfully removed from Favorites.");
-          return response.json();
-        })
-        .then((user) => {
-          if (user) {
-            updateUser(user);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    if (newFav) {
-      addToFavorites();
-    }
-    if (deleteFav) {
-      removeFromFavorites();
-    }
-  }, [newFav, deleteFav, token]);
-
-  const handleAddToFavorites = () => {
-    setNewFav(movie._id); //changed from Title
+  // Add to favorites
+  const handleAddToFavorites = (event) => {
+    event.preventDefault();
+    onAddToFavorites(movie._id);
+    setIsFavorite(true);
   };
 
-  const handleRemoveFromFavorites = () => {
-    setDeleteFav(movie._id); //changed from Title
+  // Remove from favorites
+  const handleRemoveFromFavorites = (event) => {
+    event.preventDefault();
+    onRemoveFromFavorites(movie._id);
+    setIsFavorite(false);
+  };
+
+  const handleFavoriteClick = (event) => {
+    event.preventDefault();
+    if (isFavorite) {
+      setIsFavorite(false);
+    } else {
+      handleAddToFavorites(event);
+    }
   };
 
   return (
@@ -95,30 +43,29 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
           <Card.Body>
             <Card.Title>{movie.Title}</Card.Title>
             <Card.Text>{movie.Description}</Card.Text>
+            <Button
+              className="favorite-button"
+              size="sm"
+              variant={isFavorite ? "danger" : "outline-danger"}
+              onClick={
+                !isFavorite ? handleFavoriteClick : handleRemoveFromFavorites
+              }
+            >
+              {isFavorite ? "Unfavorite" : "Favorite"}
+            </Button>
           </Card.Body>
         </Card>
       </Link>
-      <Card>
-        {isFavorite ? (
-          <Button variant="danger" onClick={handleRemoveFromFavorites}>
-            Remove from Favorites
-          </Button>
-        ) : (
-          <Button variant="primary" onClick={handleAddToFavorites}>
-            Add to Favorites
-          </Button>
-        )}
-      </Card>
     </>
   );
 };
 
 MovieCard.propTypes = {
-  isFavorite: PropTypes.bool.isRequired,
   movie: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
   }).isRequired,
+  onAddToFavorites: PropTypes.func.isRequired,
 };

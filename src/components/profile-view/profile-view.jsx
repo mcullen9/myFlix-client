@@ -6,8 +6,9 @@ import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
 
-export const ProfileView = ({ token, storedToken, user, movies }) => {
+export const ProfileView = ({ user, storedToken, movies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
@@ -15,12 +16,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
   const [birthday, setBirthday] = useState(user.Birthday);
   const [profileImg, setProfileImg] = useState("");
 
-  const favoriteMovies = movies.filter(
-    (m) => user.FavoriteMovies.includes(m._id) //changed from _id
-  );
-
   const formData = {
-    //maybe get rid of form in formData everywhere and just make it data?
     Username: username,
     Password: password,
     Email: email,
@@ -81,7 +77,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${storedToken}`, //storedToken??
+        Authorization: `Bearer ${localStorage.getItem("token")}`, //storedToken??
       },
     }).then((response) => {
       if (response.ok) {
@@ -117,7 +113,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
             <Card.Text>{email}</Card.Text>
             <br />
             <Button
-              onClick={() => handleDeleteUser(storedUser.Username)} // or change back to storedUser._id
+              onClick={() => handleDeleteUser(storedUser.Username)}
               className="button-delete"
               type="submit"
               variant="outline-secondary"
@@ -138,36 +134,9 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
       <hr />
       <Row className="justify-content-center">
         <Col>
-          <FavoriteMovies
-            user={user}
-            favoriteMovies={favoriteMovies}
-            movies={movies}
-            token={token}
-          />
+          <FavoriteMovies movies={movies} favoriteMovies={favoriteMovies} />
         </Col>
       </Row>
     </>
   );
 };
-
-/* <div>
-      <p>User: {user.Username}</p>
-      <p>Email: {user.Email}</p>
-      <div>
-        <h2>Favorite Movies</h2>
-        {favoriteMovies.map((movies) => {
-          return (
-            <div key={movies._id}>
-              <img src={movies.ImagePath} />
-              <Link to={`/movies/${movies._id}`}>
-                <h4>{movies.Title}</h4>
-              </Link>
-              <button variant="secondary" onClick={() => deleteFav(movies._id)}>
-                Remove from list
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-*/
