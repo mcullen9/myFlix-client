@@ -23,6 +23,7 @@ export const MainView = () => {
     setUser(data);
     localStorage.setItem("user", JSON.stringify(data));
   };
+  console.log(token);
 
   useEffect(() => {
     if (!token) {

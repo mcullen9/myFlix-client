@@ -6,7 +6,7 @@ import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
 
-export const ProfileView = ({ user, token, movies }) => {
+export const ProfileView = ({ user, storedToken, movies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
@@ -35,7 +35,7 @@ export const ProfileView = ({ user, token, movies }) => {
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storedToken}`,
       },
     })
       .then((response) => {
