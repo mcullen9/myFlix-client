@@ -16,7 +16,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
   const [profileImg, setProfileImg] = useState("");
 
   const favoriteMovies = movies.filter(
-    (m) => user.FavoriteMovies.includes(m._id) //changed from _id
+    (m) => user.FavoriteMovies.includes(m._id) //changed from Title
   );
 
   const formData = {

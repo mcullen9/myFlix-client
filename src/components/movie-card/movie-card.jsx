@@ -5,6 +5,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
+  // const storedUser = JSON.parse(localStorage.getItem("user"));
   const [newFav, setNewFav] = useState("");
   const [deleteFav, setDeleteFav] = useState("");
 

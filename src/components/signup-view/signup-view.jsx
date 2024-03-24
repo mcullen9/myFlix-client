@@ -22,7 +22,7 @@ export const SignupView = () => {
     };
 
     fetch("https://myfaveflix.onrender.com/users", {
-      //does this endpoint need to say /signup
+      //does this endpoint need to say /signup or users
       method: "POST",
       body: JSON.stringify(data),
       headers: {

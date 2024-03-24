@@ -27357,7 +27357,7 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/movies/:Title" // or MovieID?
+                            path: "/movies/:MovieID" // or Title?
                             ,
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
@@ -27485,6 +27485,7 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
     _s();
+    // const storedUser = JSON.parse(localStorage.getItem("user"));
     const [newFav, setNewFav] = (0, _react.useState)("");
     const [deleteFav, setDeleteFav] = (0, _react.useState)("");
     // Add movie to FavoriteMovies list
@@ -27548,7 +27549,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
                             src: movie.ImagePath
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 94,
+                            lineNumber: 95,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
@@ -27557,31 +27558,31 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
                                     children: movie.Title
                                 }, void 0, false, {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 96,
+                                    lineNumber: 97,
                                     columnNumber: 13
                                 }, undefined),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
                                     children: movie.Description
                                 }, void 0, false, {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 97,
+                                    lineNumber: 98,
                                     columnNumber: 13
                                 }, undefined)
                             ]
                         }, void 0, true, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 95,
+                            lineNumber: 96,
                             columnNumber: 11
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 93,
+                    lineNumber: 94,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 92,
+                lineNumber: 93,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
@@ -27591,7 +27592,7 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
                     children: "Remove from Favorites"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 103,
+                    lineNumber: 104,
                     columnNumber: 11
                 }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                     variant: "primary",
@@ -27599,12 +27600,12 @@ const MovieCard = ({ movie, user, token, isFavorite, updateUser })=>{
                     children: "Add to Favorites"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 107,
+                    lineNumber: 108,
                     columnNumber: 11
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 101,
+                lineNumber: 102,
                 columnNumber: 7
             }, undefined)
         ]
@@ -41335,8 +41336,8 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
     _s();
-    const { Title } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
-    const movie = movies.find((m)=>m._id === Title);
+    const { MovieID } = (0, _reactRouter.useParams)(); //might need to change Title to something else maybe MovieID because of API endpoint
+    const movie = movies.find((m)=>m._id === MovieID);
     if (!movie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Movie not found!"
     }, void 0, false, {
@@ -41443,7 +41444,7 @@ const MovieView = ({ movies })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "5iEKRQbtu+cNCllpp1bi3AstI8o=", false, function() {
+_s(MovieView, "9NuEabzFM24Cni8N79O6IWO1FYU=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -41667,7 +41668,7 @@ const SignupView = ()=>{
             Birthday: isoDate
         };
         fetch("https://myfaveflix.onrender.com/users", {
-            //does this endpoint need to say /signup
+            //does this endpoint need to say /signup or users
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -41877,7 +41878,7 @@ $RefreshReg$(_c, "SignupView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"bXZCl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bZryl","react-router-dom":"9xmpe"}],"bsPVM":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"bXZCl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bZryl"}],"bsPVM":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$abf5 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -42036,7 +42037,7 @@ const ProfileView = ({ token, storedToken, user, movies })=>{
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
     const [profileImg, setProfileImg] = (0, _react.useState)("");
-    const favoriteMovies = movies.filter((m)=>user.FavoriteMovies.includes(m._id) //changed from _id
+    const favoriteMovies = movies.filter((m)=>user.FavoriteMovies.includes(m._id) //changed from Title
     );
     const formData = {
         //maybe get rid of form in formData everywhere and just make it data?
