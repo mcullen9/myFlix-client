@@ -25,6 +25,8 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
 
+  console.log(token);
+
   const updateUser = (data) => {
     setUser(data);
     localStorage.setItem("user", JSON.stringify(data));
@@ -112,9 +114,8 @@ export const MainView = () => {
                     <ProfileView
                       user={user}
                       token={token}
-                      storedToken={storedToken}
                       movies={movies}
-                      onSubmit={(user) => setUser(user)}
+                      updateUser={updateUser}
                     />
                   ) : (
                     <Navigate to="/login" />

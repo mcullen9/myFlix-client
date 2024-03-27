@@ -4,23 +4,30 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const FavoriteMovies = ({ user, favoriteMovies }) => {
+export const FavoriteMovies = ({ token, user, favoriteMovies, updateUser }) => {
   return (
-    <Col className="mb-5">
-      <h3>Favorite Movies List</h3>
+    <>
+      <Row>
+        <Col className="mb-5">
+          <h4>Favorite Movies List</h4>
+        </Col>
+      </Row>
       <Row>
         {favoriteMovies.map((movie) => (
-          <Col key={movie._id} md={6}>
-            <Link to={`/movies/${movie._id}`} />
+          <Col key={movie._id} md={6} className="mb-5">
+            <Link to={`/movies/${encodeURIComponent(movie._id)}`} />
             <MovieCard
               key={movie._id}
               isFavorite={user.FavoriteMovies.includes(movie._id)} //changed from Title
               movie={movie}
+              user={user}
+              token={token}
+              updateUser={updateUser}
             />
           </Col>
         ))}
       </Row>
-    </Col>
+    </>
   );
 };
 

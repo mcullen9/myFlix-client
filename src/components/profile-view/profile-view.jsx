@@ -6,9 +6,7 @@ import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
 
-export const ProfileView = ({ token, storedToken, user, movies }) => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-
+export const ProfileView = ({ token, user, movies, updateUser }) => {
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
@@ -33,13 +31,13 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
   function handleSubmit(event) {
     event.preventDefault(event);
     // Updated info goes to `/users/:Username` endpoint
-    fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
+    fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
       //find out syntax for the storedUser endpoint in the URL
       method: "PUT",
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${storedToken}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -51,8 +49,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
         }
       })
       .then((data) => {
-        localStorage.setItem("user", JSON.stringify(data));
-        onSubmit(data);
+        updateUser(data);
       })
       .catch((error) => {
         console.error(error);
@@ -77,11 +74,11 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
   };
 
   const handleDeleteUser = () => {
-    fetch(`https://myfaveflix.onrender.com/users/${storedUser.Username}`, {
+    fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${storedToken}`, //storedToken??
+        Authorization: `Bearer ${token}`, //storedToken??
       },
     }).then((response) => {
       if (response.ok) {
@@ -117,7 +114,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
             <Card.Text>{email}</Card.Text>
             <br />
             <Button
-              onClick={() => handleDeleteUser(storedUser.Username)} // or change back to storedUser._id
+              onClick={() => handleDeleteUser(user.Username)} // or change back to storedUser._id
               className="button-delete"
               type="submit"
               variant="outline-secondary"
@@ -143,6 +140,7 @@ export const ProfileView = ({ token, storedToken, user, movies }) => {
             favoriteMovies={favoriteMovies}
             movies={movies}
             token={token}
+            updateUser={updateUser}
           />
         </Col>
       </Row>

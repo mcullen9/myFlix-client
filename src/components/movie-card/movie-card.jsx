@@ -5,94 +5,80 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
-  // const storedUser = JSON.parse(localStorage.getItem("user"));
-  const [newFav, setNewFav] = useState("");
-  const [deleteFav, setDeleteFav] = useState("");
-
-  // Add movie to FavoriteMovies list
-  useEffect(() => {
-    const addToFavorites = () => {
-      fetch(
-        `https://myfaveflix.onrender.com/users/${
-          user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
-          },
+  const addToFavorites = () => {
+    fetch(
+      `https://myfaveflix.onrender.com/users/${
+        user.Username
+      }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add movie to Favorites.");
         }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to add movie to Favorites.");
-          }
-          alert("Movie successfully added to Favorites!");
-          return response.json();
-        })
-        .then((user) => {
-          if (user) {
-            updateUser(user); //check where else this is used
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    const removeFromFavorites = () => {
-      //empty () if it doesn't work or change to MovieID
-      fetch(
-        `https://myfaveflix.onrender.com/users/${
-          user.Username
-        }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`, //this also might need to be storedToken
-            "Content-Type": "application/json",
-          },
+        alert("Movie successfully added to Favorites!");
+        return response.json();
+      })
+      .then((user) => {
+        if (user) {
+          updateUser(user); //check where else this is used
         }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to remove movie from Favorites.");
-          }
-          alert("Movie successfully removed from Favorites.");
-          return response.json();
-        })
-        .then((user) => {
-          if (user) {
-            updateUser(user);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    if (newFav) {
-      addToFavorites();
-    }
-    if (deleteFav) {
-      removeFromFavorites();
-    }
-  }, [newFav, deleteFav, token]);
+  const removeFromFavorites = () => {
+    //empty () if it doesn't work or change to MovieID
+    fetch(
+      `https://myfaveflix.onrender.com/users/${
+        user.Username
+      }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, //this also might need to be storedToken
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to remove movie from Favorites.");
+        }
+        alert("Movie successfully removed from Favorites.");
+        return response.json();
+      })
+      .then((user) => {
+        if (user) {
+          updateUser(user);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const handleAddToFavorites = () => {
-    setNewFav(movie._id); //changed from Title
+    addToFavorites();
   };
 
   const handleRemoveFromFavorites = () => {
-    setDeleteFav(movie._id); //changed from Title
+    removeFromFavorites();
   };
 
   return (
     <>
       <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
         <Card>
-          <Card.Img variant="top" src={movie.ImagePath} />
+          <Card.Img variant="top" src={movie.ImagePath} alt={movie.Title} />
           <Card.Body>
             <Card.Title>{movie.Title}</Card.Title>
             <Card.Text>{movie.Description}</Card.Text>
