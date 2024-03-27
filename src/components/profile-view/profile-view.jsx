@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Button, Card } from "react-bootstrap";
-//import { Link } from "react-router-dom";
 import { FavoriteMovies } from "./favorite-movies";
 import { UpdateUser } from "./update-user";
 import "./profile-view.scss";
@@ -13,12 +12,11 @@ export const ProfileView = ({ token, user, movies, updateUser }) => {
   const [birthday, setBirthday] = useState(user.Birthday);
   const [profileImg, setProfileImg] = useState("");
 
-  const favoriteMovies = movies.filter(
-    (m) => user.FavoriteMovies.includes(m._id) //changed from Title
+  const favoriteMovies = movies.filter((m) =>
+    user.FavoriteMovies.includes(m._id)
   );
 
   const formData = {
-    //maybe get rid of form in formData everywhere and just make it data?
     Username: username,
     Password: password,
     Email: email,
@@ -30,9 +28,7 @@ export const ProfileView = ({ token, user, movies, updateUser }) => {
 
   function handleSubmit(event) {
     event.preventDefault(event);
-    // Updated info goes to `/users/:Username` endpoint
     fetch(`https://myfaveflix.onrender.com/users/${user.Username}`, {
-      //find out syntax for the storedUser endpoint in the URL
       method: "PUT",
       body: JSON.stringify(formData),
       headers: {
@@ -78,7 +74,7 @@ export const ProfileView = ({ token, user, movies, updateUser }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, //storedToken??
+        Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
       if (response.ok) {
@@ -114,7 +110,7 @@ export const ProfileView = ({ token, user, movies, updateUser }) => {
             <Card.Text>{email}</Card.Text>
             <br />
             <Button
-              onClick={() => handleDeleteUser(user.Username)} // or change back to storedUser._id
+              onClick={() => handleDeleteUser(user.Username)}
               className="button-delete"
               type="submit"
               variant="outline-secondary"
@@ -147,25 +143,3 @@ export const ProfileView = ({ token, user, movies, updateUser }) => {
     </>
   );
 };
-
-/* <div>
-      <p>User: {user.Username}</p>
-      <p>Email: {user.Email}</p>
-      <div>
-        <h2>Favorite Movies</h2>
-        {favoriteMovies.map((movies) => {
-          return (
-            <div key={movies._id}>
-              <img src={movies.ImagePath} />
-              <Link to={`/movies/${movies._id}`}>
-                <h4>{movies.Title}</h4>
-              </Link>
-              <button variant="secondary" onClick={() => deleteFav(movies._id)}>
-                Remove from list
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-*/

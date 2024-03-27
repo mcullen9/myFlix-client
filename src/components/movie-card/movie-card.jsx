@@ -1,5 +1,5 @@
 import "./movie-card.scss";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -9,12 +9,12 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
     fetch(
       `https://myfaveflix.onrender.com/users/${
         user.Username
-      }/movies/${encodeURIComponent(movie._id)}`, //or MovieID
+      }/movies/${encodeURIComponent(movie._id)}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, //should it say storedToken- if yes, also call storedToken in params
+          Authorization: `Bearer ${token}`,
         },
       }
     )
@@ -27,7 +27,7 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
       })
       .then((user) => {
         if (user) {
-          updateUser(user); //check where else this is used
+          updateUser(user);
         }
       })
       .catch((error) => {
@@ -36,15 +36,14 @@ export const MovieCard = ({ movie, user, token, isFavorite, updateUser }) => {
   };
 
   const removeFromFavorites = () => {
-    //empty () if it doesn't work or change to MovieID
     fetch(
       `https://myfaveflix.onrender.com/users/${
         user.Username
-      }/movies/${encodeURIComponent(movie._id)}`, //_id or Title
+      }/movies/${encodeURIComponent(movie._id)}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, //this also might need to be storedToken
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       }

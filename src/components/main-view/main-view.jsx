@@ -8,14 +8,7 @@ import { ProfileView } from "../profile-view/profile-view";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-//import Button from "react-bootstrap/Button";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useParams, //do I need this in main-view?
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -72,7 +65,7 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="/signup" // or /users ?
+            path="/signup"
             element={
               <>
                 {user ? (
@@ -125,7 +118,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:MovieID" // or Title?
+            path="/movies/:MovieID"
             element={
               <>
                 {!user ? (
@@ -154,7 +147,7 @@ export const MainView = () => {
                       <Col className="mb-4" key={movie._id} md={3}>
                         <MovieCard
                           key={movie._id}
-                          isFavorite={user.FavoriteMovies.includes(movie._id)} //changed from _id
+                          isFavorite={user.FavoriteMovies.includes(movie._id)}
                           movie={movie}
                           updateUser={updateUser}
                           user={user}

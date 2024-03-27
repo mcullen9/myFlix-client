@@ -18,7 +18,7 @@ export const FavoriteMovies = ({ token, user, favoriteMovies, updateUser }) => {
             <Link to={`/movies/${encodeURIComponent(movie._id)}`} />
             <MovieCard
               key={movie._id}
-              isFavorite={user.FavoriteMovies.includes(movie._id)} //changed from Title
+              isFavorite={user.FavoriteMovies.includes(movie._id)}
               movie={movie}
               user={user}
               token={token}
