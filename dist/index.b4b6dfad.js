@@ -42046,7 +42046,7 @@ $RefreshReg$(_c, "NavigationBar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"bXZCl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bZryl","../search-bar/search-bar":"1N8tt"}],"1N8tt":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-bootstrap":"3AD9A","../search-bar/search-bar":"1N8tt","@parcel/transformer-js/src/esmodule-helpers.js":"bXZCl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bZryl"}],"1N8tt":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$0fb4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
