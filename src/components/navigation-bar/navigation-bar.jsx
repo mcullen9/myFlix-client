@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Container, Navbar, Nav, Form, Row, Col } from "react-bootstrap";
+import { SearchBar } from "../search-bar/search-bar";
+import { Routes, Route } from "react-router-dom";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({
+  user,
+  searchTerm,
+  movies,
+  handleSearch,
+  onLoggedOut,
+}) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -35,6 +43,25 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
               </>
             )}
           </Nav>
+
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Form inline="true">
+                  <Row>
+                    <Col xs="auto">
+                      <SearchBar
+                        handleSearch={handleSearch}
+                        searchTerm={searchTerm}
+                        movies={movies}
+                      />
+                    </Col>
+                  </Row>
+                </Form>
+              }
+            />
+          </Routes>
         </Navbar.Collapse>
       </Container>
     </Navbar>
