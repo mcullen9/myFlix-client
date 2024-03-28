@@ -45,7 +45,7 @@ DELETE /users/:Username/movies/:MovieID: Remove a movie from a user's list of fa
 
 ### Installation:
 
-    1. Required Dependencies
+1. Required Dependencies
 
 `npm install -g parcel`
 
