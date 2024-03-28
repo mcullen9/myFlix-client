@@ -1,94 +1,179 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { ProfileView } from "../profile-view/profile-view";
+
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      _id: "65b354f0ed3a05235544d765",
-      Title: "Inception",
-      Description:
-        "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-      Genre: {
-        Name: "Sci-Fi",
-        Description:
-          "Science fiction films incorporate futuristic elements such as advanced technology, space travel, and time travel.",
-      },
-      Director: {
-        Name: "Christopher Nolan",
-        Bio: "Christopher Nolan is a renowned British-American filmmaker known for his visionary and groundbreaking work in the realm of cinema, particularly acclaimed for directing mind-bending narratives and visually striking films.",
-        BirthYear: "1970",
-        DeathYear: null,
-      },
-      ImagePath: "https://example.com/inception.jpg",
-      Feature: true,
-    },
-    {
-      _id: "65b355f3ed3a05235544d766",
-      Title: "The Dark Knight",
-      Description:
-        "A gripping superhero film that follows Batman's quest to confront the anarchic Joker, exploring themes of chaos, morality, and the blurred line between heroism and vigilantism.",
-      Genre: {
-        Name: "Action",
-        Description:
-          "Action films emphasize physical activity and exhilaration.",
-      },
-      Director: {
-        Name: "Christopher Nolan",
-        Bio: "Christopher Nolan is a renowned British-American filmmaker known for his visionary and groundbreaking work in the realm of cinema, particularly acclaimed for directing mind-bending narratives and visually striking films.",
-        BirthYear: "1970",
-        DeathYear: null,
-      },
-      ImagePath: "https://example.com/dark_knight.jpg",
-      Feature: true,
-    },
-    {
-      _id: "65b358feed3a05235544d767",
-      Title: "Avatar",
-      Description:
-        "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
-      Genre: {
-        Name: "Sci-Fi",
-        Description:
-          "Science fiction films incorporate futuristic elements such as advanced technology, space travel, and time travel.",
-      },
-      Director: {
-        Name: "James Cameron",
-        Bio: "Legendary director",
-        BirthYear: "1954",
-        DeathYear: null,
-      },
-      ImagePath: "https://example.com/avatar.jpg",
-      Feature: false,
-    },
-  ]);
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  if (selectedMovie) {
-    return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={() => setSelectedMovie(null)}
-      />
-    );
-  }
+  const updateUser = (data) => {
+    setUser(data);
+    localStorage.setItem("user", JSON.stringify(data));
+  };
 
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    fetch("https://myfaveflix.onrender.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((movies) => {
+        const moviesFromApi = movies.map((movie) => {
+          return {
+            _id: movie._id,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: movie.Genre,
+            Director: movie.Director,
+            ImagePath: movie.ImagePath,
+          };
+        });
+        localStorage.setItem("movies", JSON.stringify(moviesFromApi));
+        setMovies(moviesFromApi);
+      });
+  }, [token]);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    const storedMovies = JSON.parse(localStorage.getItem("movies"));
+    const filteredMovies = storedMovies.filter((movie) => {
+      return movie.Title.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setMovies(filteredMovies);
+  };
 
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
-        />
-      ))}
-    </div>
+    <BrowserRouter>
+      <NavigationBar
+        user={user}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        movies={movies}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
+      <br />
+      <Row className="justify-content-md-center">
+        <Routes>
+          <Route
+            path="/signup"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={4}>
+                    <SignupView />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={4}>
+                    <LoginView
+                      onLoggedIn={(user, token) => {
+                        setUser(user);
+                        setToken(token);
+                      }}
+                    />
+                  </Col>
+                )}
+              </>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <Row className="justify-content-center">
+                <Col sm={12} md={9} lg={7}>
+                  {user ? (
+                    <ProfileView
+                      user={user}
+                      token={token}
+                      movies={movies}
+                      updateUser={updateUser}
+                    />
+                  ) : (
+                    <Navigate to="/login" />
+                  )}
+                </Col>
+              </Row>
+            }
+          />
+          <Route
+            path="/movies/:MovieID"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <Col md={8}>
+                    <MovieView movies={movies} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    {movies.map((movie) => (
+                      <Col className="mb-4" key={movie._id} md={3}>
+                        <MovieCard
+                          key={movie._id}
+                          isFavorite={user.FavoriteMovies.includes(movie._id)}
+                          movie={movie}
+                          updateUser={updateUser}
+                          user={user}
+                          token={token}
+                        />
+                      </Col>
+                    ))}
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 };
