@@ -17,8 +17,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-
-  console.log(token);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const updateUser = (data) => {
     setUser(data);
@@ -50,10 +49,23 @@ export const MainView = () => {
       });
   }, [token]);
 
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    const storedMovies = JSON.parse(localStorage.getItem("movies"));
+    const filteredMovies = storedMovies.filter((movie) => {
+      return movie.Title.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setMovies(filteredMovies);
+  };
+
   return (
     <BrowserRouter>
       <NavigationBar
         user={user}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
         movies={movies}
         onLoggedOut={() => {
           setUser(null);
